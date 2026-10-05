@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 - 2026-10-05
+
+- The plugin now lives at the repository root, so its README and LICENSE ship with it.
+- Added `displayName` and a README section on what the plugin does and does not do.
+- No change to behavior.
+
 ## 0.1.0 - 2026-10-05
 
 - First release.

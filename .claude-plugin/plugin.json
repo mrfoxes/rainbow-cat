@@ -1,6 +1,7 @@
 {
   "name": "nyan-cat",
-  "version": "0.1.0",
+  "displayName": "Nyan Cat Mode",
+  "version": "0.1.1",
   "description": "Nyan cat mode: a nyan cat with a short rainbow beside the spinner while Claude works",
   "author": {
     "name": "mrfoxes",
