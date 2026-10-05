@@ -53,7 +53,7 @@ Notes:
 
 ## What the plugin does
 
-This plugin is a Claude Code mod: a TypeScript hooks module, `hooks/register.ts`, that Claude Code loads from `hooks/hooks.json`, and a surface module, `hooks/cat.ts`, that draws the animated cat.
+This plugin is a Claude Code mod: one TypeScript hooks module, `hooks/register.ts`, that Claude Code loads from `hooks/hooks.json`. It has no other code files.
 
 ### Hooks
 
@@ -61,7 +61,7 @@ This plugin is a Claude Code mod: a TypeScript hooks module, `hooks/register.ts`
 | ---- | ------------ |
 | `session.start` | Registers the `/rainbow` command and loads your saved on/off choice from the plugin store. |
 | `command.run` with `{command: "rainbow"}` | Turns rainbow cat mode on or off, saves the choice to the plugin store, and asks Claude Code to redraw the spinner. Replies with one line of text. |
-| `ui.render` with `{component: "Spinner"}` | In the terminal, while the mode is on, swaps the spinner word for a cat word and draws the cat beside Claude Code's own spinner line. Elsewhere it changes nothing. |
+| `ui.render` with `{component: "Spinner"}` | In the terminal, while the mode is on, swaps the spinner word for a cat word and draws the cat beside Claude Code's own spinner line. While the spinner shows, a 120 ms timer moves the animation one frame and redraws; the timer stops a few frames after the spinner goes away. Elsewhere it changes nothing. |
 | `ui.render` with `{component: "TurnDuration"}` | While the mode is on, changes the word in the line that closes a turn to "Rainbowed". |
 
 ### Mods API calls
@@ -70,10 +70,9 @@ This plugin is a Claude Code mod: a TypeScript hooks module, `hooks/register.ts`
 | ---- | ------------ |
 | `$.command.register` | Adds the `/rainbow` slash command. |
 | `$.store.get`, `$.store.set` | Reads and writes one key, `isOn` (true or false), in this plugin's own store on your machine. |
-| `$.ui.resolve` | Gets the elements (`Box`, `Text`, `Client`) the terminal draws with. |
-| `$.ui.invalidate` | Asks Claude Code to redraw the spinner after you toggle the mode. |
-
-The surface module `hooks/cat.ts` gets no mods API. It runs a 120 ms timer that moves the animation one frame.
+| `$.ui.resolve` | Gets the elements (`Box`, `Text`) the terminal draws with. |
+| `$.ui.invalidate` | Asks Claude Code to redraw the spinner: after you toggle the mode, and on each animation frame. |
+| `$.clock.every` | Runs the 120 ms animation timer while the spinner shows. |
 
 ### What it does not do
 
@@ -81,11 +80,11 @@ The surface module `hooks/cat.ts` gets no mods API. It runs a 120 ms timer that 
 - It runs no shell commands and starts no processes. The only command involved is the `/rainbow` slash command it adds.
 - It does not read your files, prompts, conversations or environment variables.
 - It calls no other plugin. Every call above is part of Claude Code's own mods API.
-- It has no dependencies and no build step: the source in `hooks/` is what runs.
+- It has no dependencies and no build step: `hooks/register.ts` is the only code that runs.
 
 ## Requirements
 
-This plugin uses the Claude Code function-hooks plugin API (`ui.render`, `$.command`, `$.store`). That API is early access and can change between releases. Version 0.2.2 was built and tested on Claude Code 2.1.289.
+This plugin uses the Claude Code function-hooks plugin API (`ui.render`, `$.command`, `$.store`). That API is early access and can change between releases. Version 0.2.3 was built and tested on Claude Code 2.1.289.
 
 ## Development
 
@@ -94,9 +93,7 @@ This plugin uses the Claude Code function-hooks plugin API (`ui.render`, `$.comm
 .claude-plugin/marketplace.json   marketplace entry for this repository
 .claude-plugin/icon.png           listing icon
 hooks/hooks.json                  hooks module list
-hooks/register.ts                 hooks: /rainbow command, Spinner and TurnDuration rendering
-hooks/cat.ts                      surface module that draws the animated cat
-types/index.d.ts                  props the hooks module hands the surface module
+hooks/register.ts                 hooks: /rainbow command, the animated cat beside the spinner, the turn summary word
 tests/rainbow-cat.test.ts         tests
 ```
 

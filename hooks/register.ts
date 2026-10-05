@@ -1,11 +1,24 @@
 import type { Register } from 'claude-code'
 
-import type { CatProps } from '../types'
-
 const WORDS = ['Rainbowing', 'Purring', 'Meowing', 'Sparkling', 'Prancing', 'Zooming']
+
+const FRAME_MS = 120
+// After this many frames with no spinner drawn, the animation timer stops
+const IDLE_FRAMES = 3
+const RAINBOW = ['#ff0000', '#ff9900', '#ffff00', '#33ff00', '#0099ff', '#6633ff']
+const BODY = '#ff99ff'
+const SPRINKLE = '#ff3399'
+const FUR = '#999999'
+// The whole cat with its rainbow, and the tail, body and face alone, in columns
+const WIDTH = 13
+const CAT_WIDTH = 7
 
 // Whether rainbow cat mode is on; session.start loads the saved choice
 let isOn = true
+// The animation: its frame, its timer, and the frames since the spinner was last drawn
+let frame = 0
+let timer: { cancel: () => void } | undefined
+let idleFrames = 0
 
 // The engine samples one word per turn, so the same word maps to the same cat word
 const catWord = (word: string) => {
@@ -52,8 +65,24 @@ export const register: Register = on => {
       return line
     }
 
-    const { Box, Client, Text } = $.ui.resolve(e)
-    const cat: CatProps = { width: 13 }
+    // Each frame moves the rainbow and the tail, and draws the spinner again;
+    // the timer stops once the spinner has gone
+    idleFrames = 0
+    if (timer === undefined) {
+      timer = $.clock.every(FRAME_MS, () => {
+        idleFrames += 1
+        if (idleFrames > IDLE_FRAMES) {
+          timer?.cancel()
+          timer = undefined
+          return
+        }
+        frame += 1
+        $.ui.invalidate('ui.render')
+      })
+    }
+
+    const { Box, Text } = $.ui.resolve(e)
+    const trail = WIDTH - CAT_WIDTH
     // The engine draws its line under a blank row, so the cat steps down one
     // row to run beside the line's text; the line never squeezes the cat
     return Box({
@@ -63,7 +92,23 @@ export const register: Register = on => {
           marginTop: 1,
           flexShrink: 0,
           children: [
-            Client({ key: 'cat', module: './cat.ts', props: cat, width: cat.width }),
+            Box({
+              key: 'cat',
+              flexDirection: 'row',
+              width: WIDTH,
+              flexShrink: 0,
+              children: [
+                ...Array.from({ length: trail }, (_, i) =>
+                  Text({
+                    color: RAINBOW[(trail - 1 - i) % RAINBOW.length],
+                    children: [(i + frame) % 2 === 0 ? '▀' : '▄'],
+                  }),
+                ),
+                Text({ color: FUR, children: [frame % 2 === 0 ? '~' : '-'] }),
+                Text({ color: SPRINKLE, backgroundColor: BODY, children: ['·:·'] }),
+                Text({ color: '#000000', backgroundColor: FUR, children: ['^ω^'] }),
+              ],
+            }),
             Text({ children: [' '] }),
           ],
         }),

@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Claude Code plugins by mrfoxes",
-    "version": "0.2.2"
+    "version": "0.2.3"
   },
   "plugins": [
     {
       "name": "rainbow-cat",
       "source": "./",
       "description": "Rainbow cat mode: an animated cat with a short rainbow beside the spinner while Claude works",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "author": {
         "name": "mrfoxes",
         "url": "https://github.com/mrfoxes"

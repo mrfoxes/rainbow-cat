@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.3 - 2026-10-05
+
+- The cat is drawn directly in the spinner hook, with no `Client` element and no surface module. `hooks/register.ts` is now the only code file.
+- A 120 ms `$.clock.every` timer animates the cat while the spinner shows, and stops a few frames after the spinner goes away.
+- The README lists `$.clock.every` among the mods API calls.
+- No visible change.
+
 ## 0.2.2 - 2026-10-05
 
 - Added a listing icon at `.claude-plugin/icon.png`.
