@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1 - 2026-10-05
+
+- The marketplace is now named `mrfoxes`. Install with `claude plugin install rainbow-cat@mrfoxes`.
+- No change to behavior.
+
 ## 0.2.0 - 2026-10-05
 
 - Renamed from `nyan-cat` to `rainbow-cat`. The repository is now `mrfoxes/rainbow-cat` and the marketplace is `rainbow-cat`.

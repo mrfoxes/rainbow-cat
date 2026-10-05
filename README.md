@@ -16,7 +16,7 @@ From a terminal:
 
 ```sh
 claude plugin marketplace add mrfoxes/rainbow-cat
-claude plugin install rainbow-cat@rainbow-cat
+claude plugin install rainbow-cat@mrfoxes
 ```
 
 Or in one command inside Claude Code (v2.1.275 or later):
@@ -29,7 +29,7 @@ Or in two steps inside Claude Code:
 
 ```
 /plugin marketplace add mrfoxes/rainbow-cat
-/plugin install rainbow-cat@rainbow-cat
+/plugin install rainbow-cat@mrfoxes
 ```
 
 Start a new session, or run `/reload-plugins` in the current one.
@@ -61,7 +61,7 @@ The plugin does not read your files, prompts or conversations. It does not run c
 
 ## Requirements
 
-This plugin uses the Claude Code function-hooks plugin API (`ui.render`, `$.command`, `$.store`). That API is early access and can change between releases. Version 0.2.0 was built and tested on Claude Code 2.1.289.
+This plugin uses the Claude Code function-hooks plugin API (`ui.render`, `$.command`, `$.store`). That API is early access and can change between releases. Version 0.2.1 was built and tested on Claude Code 2.1.289.
 
 ## Development
 
@@ -101,7 +101,7 @@ npx -p typescript tsc -p .
 3. Commit, then tag the release with `claude plugin tag . --push`. The command checks that both versions agree.
 4. Push the commit.
 
-Users get the new version with `claude plugin update rainbow-cat@rainbow-cat`.
+Users get the new version with `claude plugin update rainbow-cat@mrfoxes`.
 
 ## License
 
