@@ -1,0 +1,14 @@
+{
+  "name": "nyan-cat",
+  "version": "0.1.0",
+  "description": "Nyan cat mode: a nyan cat with a short rainbow beside the spinner while Claude works",
+  "author": {
+    "name": "mrfoxes",
+    "url": "https://github.com/mrfoxes"
+  },
+  "homepage": "https://github.com/mrfoxes/nyan-cat",
+  "repository": "https://github.com/mrfoxes/nyan-cat",
+  "license": "MIT",
+  "keywords": ["nyan-cat", "spinner", "fun", "terminal", "mod"],
+  "types": "./types/index.d.ts"
+}
