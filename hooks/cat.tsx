@@ -1,19 +1,19 @@
 import type { ClientModule } from 'claude-code'
 
-import type { NyanProps } from '../types'
+import type { CatProps } from '../types'
 
 type Tick = { t: number }
 
 const FRAME_MS = 120
 const RAINBOW = ['#ff0000', '#ff9900', '#ffff00', '#33ff00', '#0099ff', '#6633ff']
-const TART = '#ff99ff'
+const BODY = '#ff99ff'
 const SPRINKLE = '#ff3399'
 const FUR = '#999999'
-// Tail, pop-tart and face, in columns
+// Tail, body and face, in columns
 const CAT_WIDTH = 7
 
 // One row: the cat stays put, a short rainbow ripples behind it and its tail wags
-const Nyan: ClientModule<NyanProps, Tick> = (props, surface) => {
+const Cat: ClientModule<CatProps, Tick> = (props, surface) => {
   if (surface.state === undefined) {
     let t = 0
     surface.every(FRAME_MS, () => {
@@ -33,7 +33,7 @@ const Nyan: ClientModule<NyanProps, Tick> = (props, surface) => {
         <Text color={RAINBOW[(trail - 1 - i) % RAINBOW.length]}>{(i + t) % 2 === 0 ? '▀' : '▄'}</Text>
       ))}
       <Text color={FUR}>{t % 2 === 0 ? '~' : '-'}</Text>
-      <Text color={SPRINKLE} backgroundColor={TART}>
+      <Text color={SPRINKLE} backgroundColor={BODY}>
         ·:·
       </Text>
       <Text color="#000000" backgroundColor={FUR}>
@@ -43,4 +43,4 @@ const Nyan: ClientModule<NyanProps, Tick> = (props, surface) => {
   )
 }
 
-export default Nyan
+export default Cat

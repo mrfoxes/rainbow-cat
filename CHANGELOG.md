@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 - 2026-10-05
+
+- Renamed from `nyan-cat` to `rainbow-cat`. The repository is now `mrfoxes/rainbow-cat` and the marketplace is `rainbow-cat`.
+- The slash command is now `/rainbow` (`/rainbow on`, `/rainbow off`).
+- New spinner words: Rainbowing, Purring, Meowing, Sparkling, Prancing, Zooming. The turn summary says "Rainbowed".
+- The on/off choice starts fresh under the new name: rainbow cat mode is on after install.
+
 ## 0.1.1 - 2026-10-05
 
 - The plugin now lives at the repository root, so its README and LICENSE ship with it.

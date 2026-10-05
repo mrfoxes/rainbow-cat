@@ -1,27 +1,27 @@
 {
-  "name": "nyan-cat",
+  "name": "rainbow-cat",
   "owner": {
     "name": "mrfoxes",
     "url": "https://github.com/mrfoxes"
   },
   "metadata": {
-    "description": "Nyan cat mode for Claude Code",
-    "version": "0.1.1"
+    "description": "Rainbow cat mode for Claude Code",
+    "version": "0.2.0"
   },
   "plugins": [
     {
-      "name": "nyan-cat",
+      "name": "rainbow-cat",
       "source": "./",
-      "description": "Nyan cat mode: a nyan cat with a short rainbow beside the spinner while Claude works",
-      "version": "0.1.1",
+      "description": "Rainbow cat mode: an animated cat with a short rainbow beside the spinner while Claude works",
+      "version": "0.2.0",
       "author": {
         "name": "mrfoxes",
         "url": "https://github.com/mrfoxes"
       },
-      "homepage": "https://github.com/mrfoxes/nyan-cat",
-      "repository": "https://github.com/mrfoxes/nyan-cat",
+      "homepage": "https://github.com/mrfoxes/rainbow-cat",
+      "repository": "https://github.com/mrfoxes/rainbow-cat",
       "license": "MIT",
-      "keywords": ["nyan-cat", "spinner", "fun", "terminal", "mod"],
+      "keywords": ["rainbow", "cat", "spinner", "fun", "terminal", "mod"],
       "category": "fun"
     }
   ]
