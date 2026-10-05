@@ -19,7 +19,13 @@ claude plugin marketplace add mrfoxes/nyan-cat
 claude plugin install nyan-cat@nyan-cat
 ```
 
-Or inside Claude Code:
+Or in one command inside Claude Code (v2.1.275 or later):
+
+```
+/plugin install nyan-cat --marketplace mrfoxes/nyan-cat
+```
+
+Or in two steps inside Claude Code:
 
 ```
 /plugin marketplace add mrfoxes/nyan-cat
