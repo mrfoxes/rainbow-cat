@@ -1,11 +1,11 @@
-import { atom, read, update } from 'claude-code'
 import type { Register } from 'claude-code'
 
 import type { CatProps } from '../types'
 
-const isOn = atom({ plugin: 'rainbow-cat', key: 'isOn' } as const, true)
-
 const WORDS = ['Rainbowing', 'Purring', 'Meowing', 'Sparkling', 'Prancing', 'Zooming']
+
+// Whether rainbow cat mode is on; session.start loads the saved choice
+let isOn = true
 
 // The engine samples one word per turn, so the same word maps to the same cat word
 const catWord = (word: string) => {
@@ -23,7 +23,7 @@ export const register: Register = on => {
     })
     const stored = await $.store.get('isOn')
     if (typeof stored === 'boolean') {
-      await update($, isOn, () => stored)
+      isOn = stored
     }
 
     return next(e)
@@ -31,15 +31,16 @@ export const register: Register = on => {
 
   on('command.run', { command: 'rainbow' }, async ($, e) => {
     const arg = e.args.trim().toLowerCase()
-    const turnOn = arg === 'on' ? true : arg === 'off' ? false : !(await read($, isOn))
-    await update($, isOn, () => turnOn)
-    await $.store.set('isOn', turnOn)
+    isOn = arg === 'on' ? true : arg === 'off' ? false : !isOn
+    await $.store.set('isOn', isOn)
+    // The spinner and the turn summary draw from isOn, so draw them again
+    $.ui.invalidate('ui.render')
 
-    return { text: turnOn ? 'Rainbow cat mode on. Meow!' : 'Rainbow cat mode off.' }
+    return { text: isOn ? 'Rainbow cat mode on. Meow!' : 'Rainbow cat mode off.' }
   })
 
   on('ui.render', { component: 'Spinner' }, async ($, e, next) => {
-    if (e.surface !== 'terminal' || !(await read($, isOn))) {
+    if (e.surface !== 'terminal' || !isOn) {
       return next(e)
     }
 
@@ -55,18 +56,23 @@ export const register: Register = on => {
     const cat: CatProps = { width: 13 }
     // The engine draws its line under a blank row, so the cat steps down one
     // row to run beside the line's text; the line never squeezes the cat
-    return (
-      <Box flexDirection="row">
-        <Box marginTop={1} flexShrink={0}>
-          <Client key="cat" module="./cat.tsx" props={cat} width={cat.width} />
-          <Text> </Text>
-        </Box>
-        {line}
-      </Box>
-    )
+    return Box({
+      flexDirection: 'row',
+      children: [
+        Box({
+          marginTop: 1,
+          flexShrink: 0,
+          children: [
+            Client({ key: 'cat', module: './cat.ts', props: cat, width: cat.width }),
+            Text({ children: [' '] }),
+          ],
+        }),
+        line,
+      ],
+    })
   })
 
   on('ui.render', { component: 'TurnDuration' }, async ($, e, next) =>
-    (await read($, isOn)) ? next({ ...e, props: { ...e.props, word: 'Rainbowed' } }) : next(e),
+    isOn ? next({ ...e, props: { ...e.props, word: 'Rainbowed' } }) : next(e),
   )
 }

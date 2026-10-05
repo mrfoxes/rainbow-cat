@@ -20,11 +20,7 @@ const engine = (on: On) => {
   on('ui.render', { component: 'Spinner' }, ($, e) => {
     const { Box, Text } = $.ui.resolve(e)
 
-    return (
-      <Box marginTop={1}>
-        <Text>{e.props.word}…</Text>
-      </Box>
-    )
+    return Box({ marginTop: 1, children: [Text({ children: [e.props.word, '…'] })] })
   })
 }
 

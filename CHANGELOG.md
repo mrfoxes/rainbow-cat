@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.2 - 2026-10-05
+
+- Added a listing icon at `.claude-plugin/icon.png`.
+- The hooks module and the surface module are plain TypeScript (`hooks/register.ts`, `hooks/cat.ts`), without JSX.
+- The on/off choice lives in a module variable backed by `$.store`, instead of `$.state`. `plugin.json` no longer has a `types` field.
+- The README lists every hook and every mods API call, and states what the plugin does not do.
+- No change to behavior.
+
 ## 0.2.1 - 2026-10-05
 
 - The marketplace is now named `mrfoxes`. Install with `claude plugin install rainbow-cat@mrfoxes`.

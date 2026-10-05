@@ -27,20 +27,19 @@ const Cat: ClientModule<CatProps, Tick> = (props, surface) => {
   const t = surface.state?.t ?? 0
   const trail = Math.max(0, props.width - CAT_WIDTH)
 
-  return (
-    <Box flexDirection="row" width={props.width} flexShrink={0}>
-      {Array.from({ length: trail }, (_, i) => (
-        <Text color={RAINBOW[(trail - 1 - i) % RAINBOW.length]}>{(i + t) % 2 === 0 ? '▀' : '▄'}</Text>
-      ))}
-      <Text color={FUR}>{t % 2 === 0 ? '~' : '-'}</Text>
-      <Text color={SPRINKLE} backgroundColor={BODY}>
-        ·:·
-      </Text>
-      <Text color="#000000" backgroundColor={FUR}>
-        ^ω^
-      </Text>
-    </Box>
-  )
+  return Box({
+    flexDirection: 'row',
+    width: props.width,
+    flexShrink: 0,
+    children: [
+      ...Array.from({ length: trail }, (_, i) =>
+        Text({ color: RAINBOW[(trail - 1 - i) % RAINBOW.length], children: [(i + t) % 2 === 0 ? '▀' : '▄'] }),
+      ),
+      Text({ color: FUR, children: [t % 2 === 0 ? '~' : '-'] }),
+      Text({ color: SPRINKLE, backgroundColor: BODY, children: ['·:·'] }),
+      Text({ color: '#000000', backgroundColor: FUR, children: ['^ω^'] }),
+    ],
+  })
 }
 
 export default Cat

@@ -1,7 +1,7 @@
 {
   "name": "rainbow-cat",
   "displayName": "Rainbow Cat",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Rainbow cat mode: an animated cat with a short rainbow beside the spinner while Claude works",
   "author": {
     "name": "mrfoxes",
@@ -10,6 +10,5 @@
   "homepage": "https://github.com/mrfoxes/rainbow-cat",
   "repository": "https://github.com/mrfoxes/rainbow-cat",
   "license": "MIT",
-  "keywords": ["rainbow", "cat", "spinner", "fun", "terminal", "mod"],
-  "types": "./types/index.d.ts"
+  "keywords": ["rainbow", "cat", "spinner", "fun", "terminal", "mod"]
 }
